@@ -20,22 +20,20 @@ class ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
 
-        // 1. Tampilkan Data User (Email & Nama)
+        // 1. Tampilkan Data User
         if (user != null) {
             binding.tvProfileEmail.text = user.email
-            // Mengambil nama dari depan email. Contoh: mhs@test.com -> MHS
             val nama = user.email?.substringBefore("@")?.uppercase()
             binding.tvProfileName.text = nama ?: "MAHASISWA"
         }
 
-        // 2. Tombol Logout (Dengan Konfirmasi)
+        // 2. Tombol Logout
         binding.btnLogout.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Konfirmasi")
                 .setMessage("Apakah Anda yakin ingin keluar?")
                 .setPositiveButton("Ya, Keluar") { _, _ ->
                     auth.signOut()
-                    // Hapus sesi & kembali ke Login
                     val intent = Intent(this, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
@@ -45,10 +43,21 @@ class ProfileActivity : AppCompatActivity() {
                 .show()
         }
 
-        // 3. Navigasi Bawah
+        // 3. Setup Navigasi Bawah (LENGKAP 4 MENU)
+        setupBottomNav()
+    }
+
+    private fun setupBottomNav() {
         // Ke Beranda
         binding.navHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            overridePendingTransition(0, 0)
+            finish()
+        }
+
+        // Ke Jadwal (INI YANG BARU)
+        binding.navJadwal.setOnClickListener {
+            startActivity(Intent(this, JadwalActivity::class.java))
             overridePendingTransition(0, 0)
             finish()
         }
@@ -59,5 +68,7 @@ class ProfileActivity : AppCompatActivity() {
             overridePendingTransition(0, 0)
             finish()
         }
+
+        // Sedang di Profil (Tidak perlu klik)
     }
 }

@@ -33,7 +33,7 @@ class TaskActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         setupRecyclerView()
-        setupBottomNav() // <--- Navigasi diatur di sini
+        setupBottomNav() // Navigasi 4 Menu
         loadTasks()
 
         binding.fabAdd.setOnClickListener {
@@ -44,9 +44,7 @@ class TaskActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         binding.rvTask.layoutManager = LinearLayoutManager(this)
         adapter = TaskAdapter(listTask) { task ->
-            // 1. Update Database
             db.collection("tasks").document(task.id).update("isDone", task.isDone)
-            // 2. Refresh Tampilan & Sorting
             sortAndRefresh()
         }
         binding.rvTask.adapter = adapter
@@ -54,30 +52,23 @@ class TaskActivity : AppCompatActivity() {
 
     private fun sortAndRefresh() {
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-
         listTask.sortWith(Comparator { o1, o2 ->
-            // Aturan 1: Yang Selesai ditaruh di Bawah
             if (o1.isDone != o2.isDone) {
                 return@Comparator if (o1.isDone) 1 else -1
             }
-            // Aturan 2: Urutkan Sisa Deadline (Terdekat di Atas)
             val tgl1 = try { sdf.parse(o1.deadline)?.time ?: 0L } catch (e: Exception) { 0L }
             val tgl2 = try { sdf.parse(o2.deadline)?.time ?: 0L } catch (e: Exception) { 0L }
-
             return@Comparator tgl1.compareTo(tgl2)
         })
-
         adapter.notifyDataSetChanged()
     }
 
     private fun loadTasks() {
         val uid = auth.currentUser?.uid ?: return
-
         db.collection("tasks")
             .whereEqualTo("userId", uid)
             .addSnapshotListener { value, error ->
                 if (error != null) return@addSnapshotListener
-
                 listTask.clear()
                 for (doc in value!!) {
                     val task = doc.toObject(TaskModel::class.java)
@@ -98,7 +89,6 @@ class TaskActivity : AppCompatActivity() {
                 val dateStr = String.format("%02d-%02d-%04d", day, month + 1, year)
                 dialogBinding.etDeadline.setText(dateStr)
             }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
-
             dpd.datePicker.minDate = System.currentTimeMillis() - 1000
             dpd.show()
         }
@@ -129,20 +119,28 @@ class TaskActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    // --- BAGIAN YANG DIPERBAIKI (NAVIGASI) ---
     private fun setupBottomNav() {
-        // 1. Ke Beranda
+        // Ke Beranda
         binding.navHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             overridePendingTransition(0, 0)
             finish()
         }
 
-        // 2. Ke Profil (INI YANG KEMARIN LUPA DITAMBAHKAN)
+        // Ke Jadwal (INI YANG BARU)
+        binding.navJadwal.setOnClickListener {
+            startActivity(Intent(this, JadwalActivity::class.java))
+            overridePendingTransition(0, 0)
+            finish()
+        }
+
+        // Ke Profil
         binding.navProfile.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
             overridePendingTransition(0, 0)
             finish()
         }
+
+        // Sedang di Tugas (Tidak perlu klik)
     }
 }

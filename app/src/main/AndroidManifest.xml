@@ -35,6 +35,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <activity android:name=".JadwalActivity" android:exported="false" />
     </application>
 
 </manifest>

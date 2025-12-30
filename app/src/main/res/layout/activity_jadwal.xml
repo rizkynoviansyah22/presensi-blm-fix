@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFBF9">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jadwal Kuliah"
+        android:textColor="#403A34"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"/>
+
+    <HorizontalScrollView
+        android:id="@+id/tabDays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:paddingHorizontal="20dp"
+        android:scrollbars="none"
+        android:layout_marginBottom="10dp">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+            <Button android:id="@+id/btnSenin" android:layout_width="wrap_content" android:layout_height="40dp" android:text="Senin" android:layout_marginEnd="8dp" android:backgroundTint="#A9B388" android:textSize="12sp"/>
+            <Button android:id="@+id/btnSelasa" android:layout_width="wrap_content" android:layout_height="40dp" android:text="Selasa" android:layout_marginEnd="8dp" android:backgroundTint="#E6CCB2" android:textSize="12sp"/>
+            <Button android:id="@+id/btnRabu" android:layout_width="wrap_content" android:layout_height="40dp" android:text="Rabu" android:layout_marginEnd="8dp" android:backgroundTint="#E6CCB2" android:textSize="12sp"/>
+            <Button android:id="@+id/btnKamis" android:layout_width="wrap_content" android:layout_height="40dp" android:text="Kamis" android:layout_marginEnd="8dp" android:backgroundTint="#E6CCB2" android:textSize="12sp"/>
+            <Button android:id="@+id/btnJumat" android:layout_width="wrap_content" android:layout_height="40dp" android:text="Jumat" android:backgroundTint="#E6CCB2" android:textSize="12sp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tidak ada jadwal hari ini"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:textColor="#8D7B68"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvJadwal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabDays"
+        android:layout_above="@id/bottomNav"
+        android:padding="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="horizontal">
+        <LinearLayout android:id="@+id/navHome" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:id="@+id/btnBackHome" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_home" app:tint="#8D7B68"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Home" android:textSize="10sp" android:textColor="#8D7B68"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/navJadwal" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_task" app:tint="#4F6F52"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Jadwal" android:textSize="10sp" android:textColor="#4F6F52" android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/navTask" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_task" app:tint="#8D7B68"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tugas" android:textSize="10sp" android:textColor="#8D7B68"/>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/navProfile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_person" app:tint="#8D7B68"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Profil" android:textSize="10sp" android:textColor="#8D7B68"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

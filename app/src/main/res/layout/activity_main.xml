@@ -3,62 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_cream">
-
-    <LinearLayout
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:elevation="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_home"
-                app:tint="@color/sage_dark"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Beranda"
-                android:textSize="12sp"
-                android:textColor="@color/sage_dark"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/navTask"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_task"
-            app:tint="@color/text_brown"/>
-
-        <ImageView
-            android:id="@+id/navProfile"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_person"
-            app:tint="@color/text_brown"/>
-    </LinearLayout>
-
+    android:background="#FDFBF9">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNav"
-        android:padding="24dp">
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,24 +20,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Beranda"
-                android:textColor="@color/text_brown"
+                android:textColor="#403A34"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="20dp"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="24dp"
-                app:cardBackgroundColor="@color/sage_green"
-                app:cardElevation="4dp"
+                app:cardBackgroundColor="#A9B388"
                 android:layout_marginBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="20dp"
                     android:orientation="horizontal"
-                    android:padding="24dp"
                     android:gravity="center_vertical">
 
                     <LinearLayout
@@ -96,135 +46,170 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvHeaderName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Memuat Nama..."
-                            android:textColor="@color/text_brown"
-                            android:textSize="18sp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/tvHeaderEmail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="mhs@email.com"
-                            android:textColor="#403A34"
-                            android:textSize="14sp"
+                            android:text="Check-In"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
                             android:layout_marginBottom="16dp"/>
 
                         <Button
                             android:id="@+id/btnPresensiMain"
                             android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:text="Lakukan Presensi"
-                            android:textColor="@color/white"
-                            android:backgroundTint="@color/sage_dark"
-                            app:cornerRadius="12dp"
-                            android:paddingHorizontal="20dp"/>
+                            android:layout_height="40dp"
+                            android:text="Check-In"
+                            android:textColor="#FFFFFF"
+                            android:backgroundTint="#5F6F52"
+                            android:layout_marginBottom="16dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_person"
+                                app:tint="#FFFFFF"
+                                android:layout_marginEnd="8dp"/>
+
+                            <TextView
+                                android:id="@+id/tvHeaderName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MAHASISWA"
+                                android:textColor="#FFFFFF"
+                                android:textSize="13sp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvHeaderEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="email@student.com"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13sp"/>
                     </LinearLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:cardCornerRadius="50dp"
-                        app:cardBackgroundColor="#80FFFFFF"
-                        app:cardElevation="0dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            app:cardCornerRadius="40dp"
+                            app:cardBackgroundColor="#80FFFFFF">
+
                             <TextView
                                 android:id="@+id/tvPersentaseMain"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:text="0%"
-                                android:textColor="@color/text_brown"
-                                android:textSize="26sp"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Hadir"
-                                android:textColor="@color/text_brown"
-                                android:textSize="11sp"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#403A34"
+                                android:gravity="center"/>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardJadwalMini"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="24dp">
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="#F1E4C3"
+                android:layout_marginBottom="12dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="@color/card_beige"
-                    app:cardElevation="2dp"
-                    android:layout_marginEnd="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="16dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="bottom">
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_task"
+                            app:tint="#5F6F52"
+                            android:layout_marginBottom="8dp"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jadwal Hari Ini:"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_brown"/>
+                            android:text="Jadwal Hari ini:"
+                            android:textSize="11sp"
+                            android:textColor="#403A34"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3 Kelas, 2 Lab"
-                            android:textColor="@color/text_brown"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#E0C9B6"
-                    app:cardElevation="2dp"
-                    android:layout_marginStart="8dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="16dp"
-                        android:orientation="vertical"
-                        android:gravity="bottom">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Info Kuliah:"
                             android:textStyle="bold"
-                            android:textColor="@color/text_brown"/>
+                            android:textColor="#403A34"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="#D0D0D0"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_task"
+                            app:tint="#5F6F52"
+                            android:layout_marginBottom="8dp"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Batas KRS tgl 30"
-                            android:textColor="@color/text_brown"/>
+                            android:text="Tugas Mendadak"
+                            android:textSize="11sp"
+                            android:textColor="#403A34"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 Laporan"
+                            android:textStyle="bold"
+                            android:textColor="#403A34"
+                            android:textSize="12sp"/>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rekap Presensi Terkini"
-                android:textColor="@color/text_brown"
-                android:textSize="18sp"
+                android:text="Aktivitas Terakhir"
                 android:textStyle="bold"
-                android:layout_marginBottom="12dp"/>
+                android:textSize="18sp"
+                android:textColor="#403A34"
+                android:layout_marginBottom="8dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvRekapPresensi"
@@ -232,10 +217,106 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"/>
-
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home"
+                app:tint="#4F6F52"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textSize="10sp"
+                android:textColor="#4F6F52"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navJadwal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_task"
+                app:tint="#8D7B68"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jadwal"
+                android:textSize="10sp"
+                android:textColor="#8D7B68"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navTask"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_task"
+                app:tint="#8D7B68"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tugas"
+                android:textSize="10sp"
+                android:textColor="#8D7B68"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person"
+                app:tint="#8D7B68"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profil"
+                android:textSize="10sp"
+                android:textColor="#8D7B68"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
