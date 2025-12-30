@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "479472358238",
+    "project_id": "presensimobile-91be5",
+    "storage_bucket": "presensimobile-91be5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479472358238:android:9dccf8d9bde6970c1a35cf",
+        "android_client_info": {
+          "package_name": "com.project.apkpresensi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANc8NkeWN5gBvUZik8oLhlw-AmRF2uHCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
