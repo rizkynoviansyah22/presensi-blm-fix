@@ -50,8 +50,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
 
-        binding.cardJadwalMini.setOnClickListener {
+        // Card Jadwal (sebelah kiri)
+        binding.layoutJadwalMini.setOnClickListener {
             startActivity(Intent(this, JadwalActivity::class.java))
+            overridePendingTransition(0, 0)
+        }
+
+        // Card Tugas Mendadak (sebelah kanan)
+        binding.layoutTaskMini.setOnClickListener {
+            startActivity(Intent(this, TaskActivity::class.java))
             overridePendingTransition(0, 0)
         }
 

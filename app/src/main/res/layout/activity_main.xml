@@ -135,6 +135,7 @@
                     android:padding="16dp">
 
                     <LinearLayout
+                        android:id="@+id/layoutJadwalMini"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -171,6 +172,7 @@
                         android:background="#D0D0D0"/>
 
                     <LinearLayout
+                        android:id="@+id/layoutTaskMini"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
