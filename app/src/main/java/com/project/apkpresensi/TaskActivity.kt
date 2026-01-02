@@ -30,8 +30,10 @@ class TaskActivity : AppCompatActivity() {
     private lateinit var adapter: TaskAdapter
     private val listTask = ArrayList<TaskModel>()
 
-    // Format tanggal dibuat konstan agar konsisten
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+    // Flag untuk mencegah reload saat update status
+    private var isUpdatingStatus = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class TaskActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         setupRecyclerView()
-        setupSwipeToDelete() // Fitur baru: Geser untuk hapus
+        setupSwipeToDelete()
         setupBottomNav()
         loadTasks()
 
@@ -53,14 +55,12 @@ class TaskActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         binding.rvTask.layoutManager = LinearLayoutManager(this)
-        // Callback saat checkbox diklik
-        adapter = TaskAdapter(listTask) { task ->
-            updateTaskStatus(task)
+        adapter = TaskAdapter(listTask) { task, position ->
+            updateTaskStatus(task, position)
         }
         binding.rvTask.adapter = adapter
     }
 
-    // Fitur: Geser item ke samping untuk menghapus
     private fun setupSwipeToDelete() {
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
@@ -75,18 +75,15 @@ class TaskActivity : AppCompatActivity() {
                 val position = viewHolder.adapterPosition
                 val taskToDelete = listTask[position]
 
-                // Hapus dari list sementara (visual)
                 listTask.removeAt(position)
                 adapter.notifyItemRemoved(position)
 
-                // Hapus dari Firestore
                 db.collection("tasks").document(taskToDelete.id)
                     .delete()
                     .addOnSuccessListener {
                         Snackbar.make(binding.root, "Tugas dihapus", Snackbar.LENGTH_LONG).show()
                     }
                     .addOnFailureListener {
-                        // Jika gagal, kembalikan item ke list
                         listTask.add(position, taskToDelete)
                         adapter.notifyItemInserted(position)
                         Toast.makeText(this@TaskActivity, "Gagal menghapus tugas", Toast.LENGTH_SHORT).show()
@@ -97,41 +94,54 @@ class TaskActivity : AppCompatActivity() {
         itemTouchHelper.attachToRecyclerView(binding.rvTask)
     }
 
-    private fun updateTaskStatus(task: TaskModel) {
+    private fun updateTaskStatus(task: TaskModel, position: Int) {
+        isUpdatingStatus = true
+
         db.collection("tasks").document(task.id)
             .update("isDone", task.isDone)
             .addOnSuccessListener {
-                sortAndRefresh() // Sort ulang setelah status berubah
+                // Delay sorting agar visual update dulu
+                binding.root.postDelayed({
+                    sortAndRefresh()
+                    isUpdatingStatus = false
+                }, 300)
             }
             .addOnFailureListener {
+                // Revert status jika gagal
+                task.isDone = !task.isDone
+                adapter.notifyItemChanged(position)
+                isUpdatingStatus = false
                 Toast.makeText(this, "Gagal update status", Toast.LENGTH_SHORT).show()
-                // Revert checkbox jika gagal (opsional, butuh logic di adapter)
             }
     }
 
     private fun sortAndRefresh() {
-        listTask.sortWith(Comparator { o1, o2 ->
+        listTask.sortWith { o1, o2 ->
             // 1. Prioritas: Yang belum selesai (false) ditaruh di atas
             if (o1.isDone != o2.isDone) {
-                return@Comparator if (o1.isDone) 1 else -1
+                return@sortWith if (o1.isDone) 1 else -1
             }
             // 2. Prioritas: Berdasarkan Tanggal Deadline terdekat
             val tgl1 = try { dateFormat.parse(o1.deadline)?.time ?: Long.MAX_VALUE } catch (e: Exception) { Long.MAX_VALUE }
             val tgl2 = try { dateFormat.parse(o2.deadline)?.time ?: Long.MAX_VALUE } catch (e: Exception) { Long.MAX_VALUE }
-            return@Comparator tgl1.compareTo(tgl2)
-        })
+            return@sortWith tgl1.compareTo(tgl2)
+        }
         adapter.notifyDataSetChanged()
     }
 
     private fun loadTasks() {
         val uid = auth.currentUser?.uid ?: return
 
-        // UPDATE PENTING: Menambahkan 'this' agar listener mati saat Activity hancur
         db.collection("tasks")
             .whereEqualTo("userId", uid)
             .addSnapshotListener(this) { value, error ->
                 if (error != null) {
                     Toast.makeText(this, "Gagal memuat data: ${error.message}", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
+
+                // Skip reload jika sedang update status (untuk mencegah conflict)
+                if (isUpdatingStatus) {
                     return@addSnapshotListener
                 }
 
@@ -158,7 +168,6 @@ class TaskActivity : AppCompatActivity() {
                 dialogBinding.etDeadline.setText(dateStr)
             }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
 
-            // Set minimal tanggal hari ini
             dpd.datePicker.minDate = System.currentTimeMillis() - 1000
             dpd.show()
         }
@@ -174,7 +183,6 @@ class TaskActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Disable tombol agar tidak double click
             dialogBinding.btnSimpanTask.isEnabled = false
             dialogBinding.btnSimpanTask.text = "Menyimpan..."
 
@@ -186,7 +194,7 @@ class TaskActivity : AppCompatActivity() {
                 "deadline" to deadline,
                 "deskripsi" to deskripsi,
                 "isDone" to false,
-                "createdAt" to System.currentTimeMillis() // Opsional: untuk sorting default
+                "createdAt" to System.currentTimeMillis()
             )
 
             db.collection("tasks").add(newTask)
@@ -209,7 +217,6 @@ class TaskActivity : AppCompatActivity() {
         binding.navProfile.setOnClickListener { navigateTo(ProfileActivity::class.java) }
     }
 
-    // Helper function agar codingan navigasi lebih rapi
     private fun navigateTo(cls: Class<*>) {
         startActivity(Intent(this, cls))
         overridePendingTransition(0, 0)
